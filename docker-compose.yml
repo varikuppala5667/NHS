@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  #for mongodb
+  mongodb:
+    container_name: mongodb
+    image: mongo:4.4.10
+    restart: always
+    volumes:
+      - mongodb:/data/db
+
+  #for Node.js
+  nodejs:
+    build: .
+    ports:
+      - "1234:3000"
+    environment:
+      PORT: 3000
+      MONGODB_URI: mongodb://mongodb:27017
+      DB_NAME: my_db
+      NAME: Truly Mittal
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb:
